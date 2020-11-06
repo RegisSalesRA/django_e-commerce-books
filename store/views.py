@@ -1,13 +1,15 @@
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
-from .models import Category, Product, Cart, CartItem, Order, OrderItem
+from .models import Category, Product, Cart, CartItem, Order, OrderItem, Review
 import stripe
 from django.conf import settings
 from django.contrib.auth.models import User, Group
 from .forms import SignUpForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth.decorators import login_required
+
 
 # Create your views here.
 
@@ -27,7 +29,15 @@ def productPage(request, category_slug, product_slug):
         product = Product.objects.get(category__slug=category_slug, slug=product_slug)
     except Exception as e:
         raise e
-    return render(request, 'product.html', {'product': product})
+
+    if request.method == 'POST' and request.user.is_authenticated and request.POST['content'].strip() != '':
+        Review.objects.create(product=product,
+                              user=request.user,
+                              content=request.POST['content'])
+
+    reviews = Review.objects.filter(product=product)
+
+    return render(request, 'product.html', {'product': product, 'reviews':reviews})
 
 
 #
@@ -191,7 +201,7 @@ def signupView(request):
             customer_group = Group.objects.get(name='Customer')
             customer_group.user_set.add(signup_user)
     else:
-            form = SignUpForm()
+        form = SignUpForm()
     return render(request, 'signup.html', {'form': form})
 
 
@@ -201,16 +211,39 @@ def signinView(request):
         if form.is_valid():
             username = request.POST['username']
             password = request.POST['password']
-            user = authenticate(username=username,password=password)
+            user = authenticate(username=username, password=password)
             if user is not None:
-                login(request,user)
+                login(request, user)
                 return redirect('home')
             else:
                 return redirect('signup')
     else:
         form = AuthenticationForm()
-    return render(request, 'signin.html', {'form':form})
+    return render(request, 'signin.html', {'form': form})
+
 
 def signoutView(request):
     logout(request)
     return redirect('signin')
+
+
+@login_required(redirect_field_name='next', login_url='signin')
+def orderHistory(request):
+    if request.user.is_authenticated:
+        email = str(request.user.email)
+        order_details = Order.objects.filter(emailAddress=email)
+    return render(request, 'orders_list.html', {'order_details': order_details})
+
+
+@login_required(redirect_field_name='next', login_url='signin')
+def viewOrder(request, order_id):
+    if request.user.is_authenticated:
+        email = str(request.user.email)
+        order = Order.objects.get(id=order_id, emailAdress=email)
+        order_items = OrderItem.objects.filter(order=order)
+    return render(request, 'orders_detail.html', {'order': order, 'order_items': order_items})
+
+
+def search(request):
+    products = Product.objects.filter(name__contains=request.GET['title'])
+    return render(request, 'home.html', {'products': products})
