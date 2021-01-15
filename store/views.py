@@ -239,7 +239,7 @@ def orderHistory(request):
 def viewOrder(request, order_id):
     if request.user.is_authenticated:
         email = str(request.user.email)
-        order = Order.objects.get(id=order_id, emailAdress=email)
+        order = Order.objects.get(id=order_id, emailAddress=email)
         order_items = OrderItem.objects.filter(order=order)
     return render(request, 'orders_detail.html', {'order': order, 'order_items': order_items})
 
