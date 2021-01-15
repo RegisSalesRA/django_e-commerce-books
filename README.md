@@ -1,5 +1,5 @@
 # Ecommerce-Store
-## A new project ecommerce i hope get more experience and learn more stuffs with this new project
+## A new project ecommerce based in python/django 
 
 Follow the Steps:
 
@@ -19,7 +19,7 @@ Fourth Step:
 
     python3 manage.py createsuperuser
     
-Fifth   
+Fifth Step:
  
     login admin and go to group section and create a group name called Customer with first letter uppercase
     
@@ -27,5 +27,6 @@ Finally
 
     run a command python3 manage.py runserver
    
-# Enjoin
+# have a good time
+
 <img src="Layout.png" alt="Rest Form">
