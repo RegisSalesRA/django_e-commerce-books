@@ -1,4 +1,4 @@
-# E-commerce-Store
+# Ecommerce-Store
 ## A new project ecommerce i hope get more experience and learn more stuffs with this new project
 
 Follow the Steps:
