@@ -1,5 +1,6 @@
-from .models import Category, CartItem,Cart
+from .models import Category, CartItem, Cart
 from .views import _cart_id
+
 
 def counter(request):
     item_count = 0
@@ -13,7 +14,8 @@ def counter(request):
                 item_count += cart_item.quantity
         except Cart.DoesNotExist:
             item_count = 0
-    return dict(item_count = item_count)
+    return dict(item_count=item_count)
+
 
 def menu_links(request):
     links = Category.objects.all()

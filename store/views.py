@@ -16,28 +16,34 @@ from django.contrib.auth.decorators import login_required
 def home(request, category_slug=None):
     category_page = None
     products = None
-    if category_slug != None:
+    if category_slug is not None:
         category_page = get_object_or_404(Category, slug=category_slug)
-        products = Product.objects.filter(category=category_page, available=True)
+        products = Product.objects.filter(
+            category=category_page, available=True)
     else:
         products = Product.objects.all().filter(available=True)
-    return render(request, 'home.html', {'category': category_page, 'products': products})
+    return render(request, 'home.html', {
+                  'category': category_page, 'products': products})
 
 
 def productPage(request, category_slug, product_slug):
     try:
-        product = Product.objects.get(category__slug=category_slug, slug=product_slug)
+        product = Product.objects.get(
+            category__slug=category_slug,
+            slug=product_slug)
     except Exception as e:
         raise e
 
-    if request.method == 'POST' and request.user.is_authenticated and request.POST['content'].strip() != '':
+    if request.method == 'POST' and request.user.is_authenticated and request.POST['content'].strip(
+    ) != '':
         Review.objects.create(product=product,
                               user=request.user,
                               content=request.POST['content'])
 
     reviews = Review.objects.filter(product=product)
 
-    return render(request, 'product.html', {'product': product, 'reviews':reviews})
+    return render(request, 'product.html', {
+                  'product': product, 'reviews': reviews})
 
 
 #
@@ -148,7 +154,8 @@ def cart_detail(request, total=0, counter=0, cart_items=None):
 
                     # reduce stock
                     products = Product.objects.get(id=order_item.product.id)
-                    products.stock = int(order_item.product.stock - order_item.quantity)
+                    products.stock = int(
+                        order_item.product.stock - order_item.quantity)
                     products.save()
                     order_item.delete()
 
@@ -161,8 +168,16 @@ def cart_detail(request, total=0, counter=0, cart_items=None):
         except stripe.error.CardError as e:
             return False, e
 
-    return render(request, 'cart.html', dict(cart_items=cart_items, total=total, counter=counter, data_key=data_key,
-                                             stripe_total=stripe_total, description=description))
+    return render(
+        request,
+        'cart.html',
+        dict(
+            cart_items=cart_items,
+            total=total,
+            counter=counter,
+            data_key=data_key,
+            stripe_total=stripe_total,
+            description=description))
 
 
 def cart_remove(request, product_id):
@@ -232,7 +247,8 @@ def orderHistory(request):
     if request.user.is_authenticated:
         email = str(request.user.email)
         order_details = Order.objects.filter(emailAddress=email)
-    return render(request, 'orders_list.html', {'order_details': order_details})
+    return render(request, 'orders_list.html', {
+                  'order_details': order_details})
 
 
 @login_required(redirect_field_name='next', login_url='signin')
@@ -241,7 +257,8 @@ def viewOrder(request, order_id):
         email = str(request.user.email)
         order = Order.objects.get(id=order_id, emailAddress=email)
         order_items = OrderItem.objects.filter(order=order)
-    return render(request, 'orders_detail.html', {'order': order, 'order_items': order_items})
+    return render(request, 'orders_detail.html', {
+                  'order': order, 'order_items': order_items})
 
 
 def search(request):

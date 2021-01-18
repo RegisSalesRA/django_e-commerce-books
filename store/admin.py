@@ -3,6 +3,7 @@ from .models import Category, Product, Order, OrderItem, Review
 
 # Register your models here.
 
+
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ['name', 'slug']
     prepopulated_fields = {'slug': ('name',)}
@@ -12,7 +13,13 @@ admin.site.register(Category, CategoryAdmin)
 
 
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ['name', 'price', 'stock', 'available', 'created', 'updated']
+    list_display = [
+        'name',
+        'price',
+        'stock',
+        'available',
+        'created',
+        'updated']
     list_editable = ['price', 'stock', 'available']
     prepopulated_fields = {'slug': ('name',)}
     list_per_page = 20
@@ -32,20 +39,27 @@ class OrderItemAdmin(admin.TabularInline):
     can_delete = False
     max_num = 0
 
+
 class OrderAdmin(admin.ModelAdmin):
     list_display = ['id', 'billingName', 'emailAddress', 'created']
     list_display_links = ['id', 'billingName']
     search_fields = ['id', 'billingName', 'emailAddress']
-    readonly_fields = ['id', 'token', 'total', 'emailAddress', 'created', 'billingName',
-                       'billingAddress1',
-                       'billingCity',
-                       'billingPostcode',
-                       'billingCountry',
-                       'shippingName',
-                       'shippingAddress1',
-                       'shippingCity',
-                       'shippingPostcode',
-                       'shippingCountry']
+    readonly_fields = [
+        'id',
+        'token',
+        'total',
+        'emailAddress',
+        'created',
+        'billingName',
+        'billingAddress1',
+        'billingCity',
+        'billingPostcode',
+        'billingCountry',
+        'shippingName',
+        'shippingAddress1',
+        'shippingCity',
+        'shippingPostcode',
+        'shippingCountry']
 
     fieldsets = [
         ('ORDER INFORMATION', {'fields': ['id', 'token', 'total', 'created']}),
