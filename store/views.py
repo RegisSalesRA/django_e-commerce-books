@@ -5,7 +5,7 @@ from .models import Category, Product, Cart, CartItem, Order, OrderItem, Review
 import stripe
 from django.conf import settings
 from django.contrib.auth.models import User, Group
-from .forms import SignUpForm
+from .forms import SignUpForm, ContactForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
@@ -45,10 +45,6 @@ def productPage(request, category_slug, product_slug):
     return render(request, 'product.html', {
                   'product': product, 'reviews': reviews})
 
-
-#
-# def cart(request):
-#     return render(request,'cart.html')
 
 def _cart_id(request):
     cart = request.session.session_key
@@ -206,7 +202,7 @@ def thanks_page(request, order_id):
     return render(request, 'thankyou.html', {'custumer_order': customer_order})
 
 
-def signupView(request):
+def signup_view(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST)
         if form.is_valid():
@@ -220,7 +216,7 @@ def signupView(request):
     return render(request, 'signup.html', {'form': form})
 
 
-def signinView(request):
+def signin_view(request):
     if request.method == 'POST':
         form = AuthenticationForm(data=request.POST)
         if form.is_valid():
@@ -237,13 +233,13 @@ def signinView(request):
     return render(request, 'signin.html', {'form': form})
 
 
-def signoutView(request):
+def signout_view(request):
     logout(request)
     return redirect('signin')
 
 
 @login_required(redirect_field_name='next', login_url='signin')
-def orderHistory(request):
+def order_history(request):
     if request.user.is_authenticated:
         email = str(request.user.email)
         order_details = Order.objects.filter(emailAddress=email)
@@ -252,7 +248,7 @@ def orderHistory(request):
 
 
 @login_required(redirect_field_name='next', login_url='signin')
-def viewOrder(request, order_id):
+def view_order(request, order_id):
     if request.user.is_authenticated:
         email = str(request.user.email)
         order = Order.objects.get(id=order_id, emailAddress=email)
@@ -267,5 +263,6 @@ def search(request):
 
 
 def contact(request):
+
     form = ContactForm()
     return render(request, 'contact.html', {'form': form})
