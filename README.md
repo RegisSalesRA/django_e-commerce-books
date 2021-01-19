@@ -29,4 +29,4 @@ Finally
    
 # have a good time
 
-<img src="Layout.png" alt="Rest Form">
+<img src="static/readme/Layout.png" alt="Rest Form">
