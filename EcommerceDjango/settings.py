@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 import os
 from dotenv import load_dotenv
+from decouple import config
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -77,7 +78,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'EcommerceDjango.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
@@ -132,6 +132,6 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static', 'media')
 
 STRIPE_PUBLISHABLE_KEY = 'pk_test_51HikvgGueILUCjH1bDAXzcbkc2UuqGbUhkOtGTFaUHuoC4E01kSGH9sBPsTEGbsXzQTs2uuvkIZa99XWF6xGeHQX00aWU6ZkyF'
-STRIPE_SECRET_KEY = 'sk_test_51HikvgGueILUCjH1uF6FDA5zlXTavngWBp58eHvK0JIOy1q1WfNX6LI0ZrcdCKKyxV34Dqi9LGQpsvDLxLrmr8LS00k8rnngKZ'
+STRIPE_SECRET_KEY = config('STRIPE_SECRET_KEY')
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
