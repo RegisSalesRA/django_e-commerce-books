@@ -5,7 +5,7 @@ from .models import Category, Product, Cart, CartItem, Order, OrderItem, Review
 import stripe
 from django.conf import settings
 from django.contrib.auth.models import User, Group
-from .forms import SignUpForm
+from .forms import SignUpForm, ContactForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
@@ -267,8 +267,5 @@ def search(request):
 
 
 def contact(request):
-    if request.method == 'POST':
-
     form = ContactForm()
-
     return render(request, 'contact.html', {'form':form})

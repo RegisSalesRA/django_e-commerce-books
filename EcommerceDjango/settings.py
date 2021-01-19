@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'store',
     'stripe',
     'crispy_forms',
+    'widget_tweaks',
 ]
 
 MIDDLEWARE = [
