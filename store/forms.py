@@ -24,9 +24,9 @@ class SignUpForm(UserCreationForm):
 class ContactForm(forms.Form):
     subject = forms.CharField(max_length=100, required=True)
     name = forms.CharField(max_length=100, required=True)
-    from_email = forms.EmailField(max_length=50,required=True)
+    from_email = forms.EmailField(max_length=50, required=True)
     messege = forms.CharField(
-        max_length = 500,
-        widget = forms.Textarea(),
+        max_length=500,
+        widget=forms.Textarea(),
         help_text='Write here your messege!'
     )
