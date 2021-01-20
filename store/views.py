@@ -26,7 +26,7 @@ def home(request, category_slug=None):
                   'category': category_page, 'products': products})
 
 
-def productPage(request, category_slug, product_slug):
+def product_page(request, category_slug, product_slug):
     try:
         product = Product.objects.get(
             category__slug=category_slug,
