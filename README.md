@@ -2,14 +2,14 @@
 ## A new project ecommerce based in python/django 
 
 
-### Before We start we must do account in stripe site
+### Before We start we must create account in stripe site
 
 Access
 
 - Stripe.com
 - Create your own account
-- Make and cofig your own account
-- Try get api
+- Make and config your own account
+- Try get api like this image shows you
 
     <img src="static/readme/ApiKeys.png" alt="Rest Form">
 
