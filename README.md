@@ -2,19 +2,23 @@
 ## A new project ecommerce based in python/django 
 
 
-## Before We start we must do account in stripe site
+### Before We start we must do account in stripe site
 
 Access
-    -Stripe.com
-    -Create your own account
-    -Make and cofig your own account
-    -Try get api
+
+- Stripe.com
+- Create your own account
+- Make and cofig your own account
+- Try get api
+
     <img src="static/readme/ApiKeys.png" alt="Rest Form">
 
 Now
-    when you get the api
-    replace .env.sample for .env
-    and make like this imagae exemple and put your secret_key
+
+- when you get the api
+- replace .env.sample for .env
+- and make changes like this image exemple and put your STRIPE_SECRET_KEY
+  
     <img src="static/readme/EnvExemple.png" alt="Rest Form">
 
 
