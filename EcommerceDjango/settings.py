@@ -132,7 +132,8 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static', 'media')
 
 STRIPE_PUBLISHABLE_KEY = 'pk_test_51HikvgGueILUCjH1bDAXzcbkc2UuqGbUhkOtGTFaUHuoC4E01kSGH9sBPsTEGbsXzQTs2uuvkIZa99XWF6xGeHQX00aWU6ZkyF'
-STRIPE_SECRET_KEY = 'pk_test_51HikvgGueILUCjH1bDAXzcbkc2UuqGbUhkOtGTFaUHuoC4E01kSGH9sBPsTEGbsXzQTs2uuvkIZa99XWF6xOudeogrongqod2o'
+STRIPE_SECRET_KEY = 'pk_test_51HikvgGueILUCjH1bDAXzcbkc2UuqGbUhkOtGTFaUHuoC4E01kSGH9sBPsTEGbsXzQTs2uuvkIZa99XWF6xOudeogrongqr41s'
+# Use this one when you get the real API stripe and replace 
 #STRIPE_SECRET_KEY = config('STRIPE_SECRET_KEY')
 
 
