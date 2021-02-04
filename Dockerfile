@@ -13,7 +13,7 @@ RUN apt-get update && apt-get upgrade -y && apt-get install -qq -y gcc netcat py
 
 # install dependencies
 RUN pip install --upgrade pip
-COPY requirements-dev.txt .
+COPY requirements-dev.txt ./
 RUN pip install -r requirements-dev.txt
 
 # copy entrypoint.sh          Script para saber se o banco de dados esta rodando ou não
@@ -23,6 +23,7 @@ RUN pip install -r requirements-dev.txt
 # copia tudo que tem aqui e joga para o container com o comando ./ .
 COPY ./ .
 
+#/DjangoApp/ 
 # run entrypoint.sh                 Script para saber se o banco de dados esta rodando ou não
 #ENTRYPOINT ["/usr/src/app/dev_entrypoint.sh"]
 
