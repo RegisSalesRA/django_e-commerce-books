@@ -47,7 +47,12 @@ Fifth Step:
 Finally
 
     run a command python3 manage.py runserver
-   
+
+
+# OBS :
+( Se você tiver docker instalado pode rodar esse projeto com o comando "docker-compose up -d --build" )
+
+
 # have a good time
 
 <img src="static/readme/Layout.png" alt="Rest Form">
