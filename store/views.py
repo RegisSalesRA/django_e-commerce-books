@@ -1,7 +1,7 @@
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
-from .models import Category, Product, Cart, CartItem, Order, OrderItem, Review
+from .models import Category, Book, Cart, CartItem, Order, OrderItem, Review
 import stripe
 from django.conf import settings
 from django.contrib.auth.models import User, Group
@@ -15,35 +15,35 @@ from django.contrib.auth.decorators import login_required
 
 def home(request, category_slug=None):
     category_page = None
-    products = None
+    books = None
     if category_slug is not None:
         category_page = get_object_or_404(Category, slug=category_slug)
-        products = Product.objects.filter(
+        books = Book.objects.filter(
             category=category_page, available=True)
     else:
-        products = Product.objects.all().filter(available=True)
+        books = Book.objects.all().filter(available=True)
     return render(request, 'home.html', {
-                  'category': category_page, 'products': products})
+                  'category': category_page, 'books': books})
 
 
-def product_page(request, category_slug, product_slug):
+def book_page(request, category_slug, book_slug):
     try:
-        product = Product.objects.get(
+        book = Book.objects.get(
             category__slug=category_slug,
-            slug=product_slug)
+            slug=book_slug)
     except Exception as e:
         raise e
 
     if request.method == 'POST' and request.user.is_authenticated and request.POST['content'].strip(
     ) != '':
-        Review.objects.create(product=product,
+        Review.objects.create(book=book,
                               user=request.user,
                               content=request.POST['content'])
 
-    reviews = Review.objects.filter(product=product)
+    reviews = Review.objects.filter(book=book)
 
-    return render(request, 'product.html', {
-                  'product': product, 'reviews': reviews})
+    return render(request, 'book.html', {
+                  'book': book, 'reviews': reviews})
 
 
 def _cart_id(request):
@@ -53,8 +53,8 @@ def _cart_id(request):
     return cart
 
 
-def add_cart(request, product_id):
-    product = Product.objects.get(pk=product_id)
+def add_cart(request, book_id):
+    book = Book.objects.get(pk=book_id)
     try:
         cart = Cart.objects.get(cart_id=_cart_id(request))
     except Cart.DoesNotExist:
@@ -63,13 +63,13 @@ def add_cart(request, product_id):
         )
         cart.save()
     try:
-        cart_item = CartItem.objects.get(product=product, cart=cart)
-        if cart_item.quantity < cart_item.product.stock:
+        cart_item = CartItem.objects.get(book=book, cart=cart)
+        if cart_item.quantity < cart_item.book.stock:
             cart_item.quantity += 1
         cart_item.save()
     except CartItem.DoesNotExist:
         cart_item = CartItem.objects.create(
-            product=product,
+            book=book,
             quantity=1,
             cart=cart
         )
@@ -83,7 +83,7 @@ def cart_detail(request, total=0, counter=0, cart_items=None):
         cart = Cart.objects.get(cart_id=_cart_id(request))
         cart_items = CartItem.objects.filter(cart=cart, active=True)
         for cart_item in cart_items:
-            total += (cart_item.product.price * cart_item.quantity)
+            total += (cart_item.book.price * cart_item.quantity)
             counter += cart_item.quantity
     except ObjectDoesNotExist:
         pass
@@ -141,18 +141,18 @@ def cart_detail(request, total=0, counter=0, cart_items=None):
                 order_details.save()
                 for order_item in cart_items:
                     or_item = OrderItem.objects.create(
-                        product=order_item.product.name,
+                        book=order_item.book.name,
                         quantity=order_item.quantity,
-                        price=order_item.product.price,
+                        price=order_item.book.price,
                         order=order_details
                     )
                     order_item.save()
 
                     # reduce stock
-                    products = Product.objects.get(id=order_item.product.id)
-                    products.stock = int(
-                        order_item.product.stock - order_item.quantity)
-                    products.save()
+                    books = Book.objects.get(id=order_item.book.id)
+                    books.stock = int(
+                        order_item.book.stock - order_item.quantity)
+                    books.save()
                     order_item.delete()
 
                     # print message when the order is created
@@ -176,10 +176,10 @@ def cart_detail(request, total=0, counter=0, cart_items=None):
             description=description))
 
 
-def cart_remove(request, product_id):
+def cart_remove(request, book_id):
     cart = Cart.objects.get(cart_id=_cart_id(request))
-    product = get_object_or_404(Product, id=product_id)
-    cart_item = CartItem.objects.get(product=product, cart=cart)
+    book = get_object_or_404(Book, id=book_id)
+    cart_item = CartItem.objects.get(book=book, cart=cart)
     if cart_item.quantity > 1:
         cart_item.quantity -= 1
         cart_item.save()
@@ -188,10 +188,10 @@ def cart_remove(request, product_id):
     return redirect('cart_detail')
 
 
-def cart_remove_product(request, product_id):
+def cart_remove_book(request, book_id):
     cart = Cart.objects.get(cart_id=_cart_id(request))
-    product = get_object_or_404(Product, id=product_id)
-    cart_item = CartItem.objects.get(product=product, cart=cart)
+    book = get_object_or_404(Book, id=book_id)
+    cart_item = CartItem.objects.get(book=book, cart=cart)
     cart_item.delete()
     return redirect('cart_detail')
 
@@ -258,8 +258,8 @@ def view_order(request, order_id):
 
 
 def search(request):
-    products = Product.objects.filter(name__contains=request.GET['title'])
-    return render(request, 'home.html', {'products': products})
+    books = Book.objects.filter(name__contains=request.GET['title'])
+    return render(request, 'home.html', {'books': books})
 
 
 def contact(request):

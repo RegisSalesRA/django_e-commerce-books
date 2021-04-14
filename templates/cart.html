@@ -7,7 +7,7 @@ Cart
 {% if not cart_items %}
 <div class="text-center">
 <br>
-<h1 class="text-center product_title">
+<h1 class="text-center book_title">
 Your shopping cart is empty
 </h1>
 <br>
@@ -18,7 +18,7 @@ Please click <a href="{% url 'home' %}">here</a> To continue shopping
 {% else %}
 <div class="text-center">
 <br>
-<div class="text-center product_title">
+<div class="text-center book_title">
 Your shopping cart
 </div>
 </div>
@@ -36,37 +36,37 @@ Your items
 {% for cart_item in cart_items %}
 <tr>
 <td>
-<a href="cart_item.product.get_url">
-<img src="{{ cart_item.product.image.url }}" width="100" height="100" alt="">
+<a href="cart_item.book.get_url">
+<img src="{{ cart_item.book.image.url }}" width="100" height="100" alt="">
 </a>
 </td>
 <td class="text-left">
-{{ cart_item.product.name }}
+{{ cart_item.book.name }}
 <br>
-SKU: {{ cart_item.product.id }}
+SKU: {{ cart_item.book.id }}
 <br>
-Unit Price: ${{ cart_item.product.price }}
+Unit Price: ${{ cart_item.book.price }}
 <br>
-Qty: {{ cart_item.quantity }} x {{ cart_item.product.price }}
+Qty: {{ cart_item.quantity }} x {{ cart_item.book.price }}
 </td>
 
 <td>
 ${{ cart_item.subtotal }}
 </td>
-{% if cart_item.quantity < cart_item.product.stock %}
+{% if cart_item.quantity < cart_item.book.stock %}
 <td>
-&nbsp;<a href="{% url 'add_cart' cart_item.product.id %}"><i
+&nbsp;<a href="{% url 'add_cart' cart_item.book.id %}"><i
 class="fas fa-plus-circle cart_icon"></i></a>
-&nbsp;<a href="{% url 'cart_remove' cart_item.product.id %}"><i
+&nbsp;<a href="{% url 'cart_remove' cart_item.book.id %}"><i
 class="fas fa-minus-circle cart_icon"></i></a>
-&nbsp;<a href="{% url 'cart_remove_product' cart_item.product.id %}"><i
+&nbsp;<a href="{% url 'cart_remove_book' cart_item.book.id %}"><i
 class="fas fa-trash-alt cart_icon"></i></a>
 </td>
 {% else %}
 <td>
-&nbsp;<a href="{% url 'cart_remove' cart_item.product.id %}"><i
+&nbsp;<a href="{% url 'cart_remove' cart_item.book.id %}"><i
 class="fas fa-minus-circle cart_icon"></i></a>
-&nbsp;<a href="{% url 'cart_remove_product' cart_item.product.id %}"><i
+&nbsp;<a href="{% url 'cart_remove_book' cart_item.book.id %}"><i
 class="fas fa-trash-alt cart_icon"></i></a>
 </td>
 {% endif %}

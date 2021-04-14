@@ -19,20 +19,20 @@ class Category(models.Model):
         verbose_name_plural = 'categories'
 
     def get_url(self):
-        return reverse('products_by_category', args=[self.slug])
+        return reverse('books_by_category', args=[self.slug])
 
     def __str__(self):
         return self.name
 
 
-# Model Product
-class Product(models.Model):
+# Model Book
+class Book(models.Model):
     name = models.CharField(max_length=250, unique=True)
     slug = models.SlugField(max_length=250, unique=True)
     description = models.TextField(blank=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     price = models.DecimalField(max_digits=10, decimal_places=2)
-    image = models.ImageField(upload_to='product', blank=True)
+    image = models.ImageField(upload_to='books', blank=True)
     stock = models.IntegerField(default=0)
     available = models.BooleanField(default=True)
     created = models.DateTimeField(auto_now_add=True)
@@ -40,11 +40,11 @@ class Product(models.Model):
 
     class Meta:
         ordering = ('name',)
-        verbose_name = 'product'
-        verbose_name_plural = 'products'
+        verbose_name = 'books'
+        verbose_name_plural = 'books'
 
     def get_url(self):
-        return reverse('product_detail', args=[self.category.slug, self.slug])
+        return reverse('books_detail', args=[self.category.slug, self.slug])
 
     def __str__(self):
         return self.name
@@ -63,7 +63,7 @@ class Cart(models.Model):
 
 
 class CartItem(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    book = models.ForeignKey(Book, on_delete=models.CASCADE)
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
     quantity = models.IntegerField(default=0)
     active = models.BooleanField(default=True)
@@ -72,7 +72,7 @@ class CartItem(models.Model):
         db_table = 'CartItem'
 
     def sub_total(self):
-        return self.product.price * self.quantity
+        return self.book.price * self.quantity
 
     def __str__(self):
         return self.product
@@ -110,7 +110,7 @@ class Order(models.Model):
 
 
 class OrderItem(models.Model):
-    product = models.CharField(max_length=250)
+    book = models.CharField(max_length=250)
     quantity = models.IntegerField(default=0)
     price = models.DecimalField(
         max_digits=10,
@@ -125,11 +125,11 @@ class OrderItem(models.Model):
         return self.quantity * self.price
 
     def __str__(self):
-        return self.product
+        return self.book
 
 
 class Review(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    book = models.ForeignKey(Book, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     content = models.CharField(max_length=500)
 

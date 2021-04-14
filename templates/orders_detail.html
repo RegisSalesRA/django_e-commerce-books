@@ -7,7 +7,7 @@ Order details
 <div class="container">
 <div class="text-center">
 <br>
-<h1 class="text-center product_title">
+<h1 class="text-center book_title">
 Order Details
 </h1>
 <br>
@@ -29,14 +29,14 @@ Order Details
 </td>
 </tr>
 <tr>
-<td><b>Product Descrioption</b></td>
+<td><b>book Descrioption</b></td>
 <td><b>Qty</b></td>
 <td><b>Unit Price</b></td>
 <td><b>Sub-Total</b></td>
 </tr>
 {% for item in order_items %}
 <tr>
-<td>{{ item.product }}</td>
+<td>{{ item.book }}</td>
 <td>{{ item.quantity }}</td>
 <td>{{ item.price }}</td>
 <td>{{ item.sub_total }}</td>

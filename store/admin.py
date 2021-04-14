@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Category, Product, Order, OrderItem, Review
+from .models import Category, Book, Order, OrderItem, Review
 
 # Register your models here.
 
@@ -12,7 +12,7 @@ class CategoryAdmin(admin.ModelAdmin):
 admin.site.register(Category, CategoryAdmin)
 
 
-class ProductAdmin(admin.ModelAdmin):
+class BookAdmin(admin.ModelAdmin):
     list_display = [
         'name',
         'price',
@@ -25,17 +25,17 @@ class ProductAdmin(admin.ModelAdmin):
     list_per_page = 20
 
 
-admin.site.register(Product, ProductAdmin)
+admin.site.register(Book, BookAdmin)
 
 
 class OrderItemAdmin(admin.TabularInline):
     model = OrderItem
     fieldsets = [
-        ('Product', {'fields': ['product'], }),
+        ('Book', {'fields': ['book'], }),
         ('Quantity', {'fields': ['quantity'], }),
         ('Price', {'fields': ['price'], }),
     ]
-    readonly_fields = ['product', 'quantity', 'price']
+    readonly_fields = ['book', 'quantity', 'price']
     can_delete = False
     max_num = 0
 
