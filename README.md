@@ -1,8 +1,8 @@
-# Ecommerce-Store
-## A new project ecommerce based in python/django 
+# Ecommerce-Book
+## A new project E-commerce based in python/django 
 
 
-### Before We start we must create account in stripe site
+### Before start you must create account in stripe site
 
 Access
 
@@ -42,17 +42,25 @@ Fourth Step:
     
 Fifth Step:
  
-    login admin and go to group section and create a group name called Customer with first letter uppercase
+    login admin and go to group section and create a group name called Customer first letter must be uppercase
     
 Finally
 
-    run a command python3 manage.py runserver
+    run a command: python3 manage.py runserver
 
 
 # OBS :
-( Se você tiver docker instalado pode rodar esse projeto com o comando "docker-compose up -d --build" )
+( If you have docker installed you can run command "docker-compose up -d --build" )
 
 
-# have a good time
+# Home E-commerce Book
 
-<img src="static/readme/Layout.png" alt="Rest Form">
+<img src="static/readme/home_book.png" alt="Rest Form">
+
+# Detail Book
+
+<img src="static/readme/detail_book.png" alt="Rest Form">
+
+# Cart Books
+
+<img src="static/readme/cart_book.png" alt="Rest Form">
