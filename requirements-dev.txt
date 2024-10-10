@@ -17,5 +17,5 @@ requests==2.31.0
 sqlparse==0.4.4
 stripe==8.1.0
 toml==0.10.2
-urllib3==2.2.0
+urllib3==2.2.2
 wrapt==1.16.0
