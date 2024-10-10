@@ -12,7 +12,7 @@ pydocstyle==6.3.0
 python-decouple==3.8
 pytz==2024.1
 python-dotenv==1.0.1
-requests==2.31.0
+requests==2.32.2
 sqlparse==0.4.4
 stripe==8.1.0
 toml==0.10.2
