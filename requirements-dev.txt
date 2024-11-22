@@ -17,4 +17,4 @@ sqlparse==0.5.2
 stripe==8.1.0
 toml==0.10.2
 urllib3==2.2.3
-wrapt==1.16.0
+wrapt==1.17.0
