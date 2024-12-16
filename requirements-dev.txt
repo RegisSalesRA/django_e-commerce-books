@@ -1,5 +1,5 @@
 asgiref==3.8.1
-certifi==2024.8.30
+certifi==2024.12.14
 chardet==5.2.0
 Django==5.1.4
 django-crispy-forms==2.3
