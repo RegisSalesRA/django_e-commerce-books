@@ -14,7 +14,7 @@ pytz==2024.2
 python-dotenv==1.2.1
 requests==2.32.5
 sqlparse==0.5.3
-stripe==8.1.0
+stripe==13.1.0
 toml==0.10.2
 urllib3==2.5.0
 wrapt==1.17.3
